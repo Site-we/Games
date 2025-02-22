@@ -5,44 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dino Game</title>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            overflow: hidden;
-            background-color: #f7f7f7;
+    <style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        overflow: hidden;
+        background-color: #f7f7f7;
+    }
+    #game {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    .dino {
+        width: 20px; /* Updated width to match obstacle */
+        height: 40px;
+        background-color: #333;
+        position: absolute;
+        bottom: 0;
+        left: 50px;
+    }
+    .obstacle {
+        width: 20px;
+        height: 40px;
+        background-color: #777;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        animation: move 3s linear infinite;
+    }
+    @keyframes move {
+        0% {
+            right: -20px;
         }
-        #game {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+        100% {
+            right: 100%;
         }
-        .dino {
-            width: 40px;
-            height: 40px;
-            background-color: #333;
-            position: absolute;
-            bottom: 0;
-            left: 50px;
-        }
-        .obstacle {
-            width: 20px;
-            height: 40px;
-            background-color: #777;
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            animation: move 3s linear infinite;
-        }
-        @keyframes move {
-            0% {
-                right: -20px;
-            }
-            100% {
-                right: 100%;
-            }
-        }
-    </style>
+    }
+</style>
 </head>
 <body>
     <div id="game">
