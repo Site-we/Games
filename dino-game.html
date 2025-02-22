@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dino Game</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            overflow: hidden;
+            background-color: #f7f7f7;
+        }
+        #game {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .dino {
+            width: 40px;
+            height: 40px;
+            background-color: #333;
+            position: absolute;
+            bottom: 0;
+            left: 50px;
+        }
+        .obstacle {
+            width: 20px;
+            height: 40px;
+            background-color: #777;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            animation: move 3s linear infinite;
+        }
+        @keyframes move {
+            0% {
+                right: -20px;
+            }
+            100% {
+                right: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="game">
+        <div class="dino" id="dino"></div>
+        <div class="obstacle" id="obstacle"></div>
+    </div>
+
+    <script>
+        const dino = document.getElementById('dino');
+        const obstacle = document.getElementById('obstacle');
+        let isJumping = false;
+        let gravity = 0.9;
+
+        function jump() {
+            if (isJumping) return;
+            isJumping = true;
+            let position = 0;
+            let timerId = setInterval(function () {
+                if (position >= 150) {
+                    clearInterval(timerId);
+                    let downTimerId = setInterval(function () {
+                        if (position <= 0) {
+                            clearInterval(downTimerId);
+                            isJumping = false;
+                        }
+                        position -= 5;
+                        position = position * gravity;
+                        dino.style.bottom = position + 'px';
+                    }, 20);
+                }
+                position += 30;
+                position = position * gravity;
+                dino.style.bottom = position + 'px';
+            }, 20);
+        }
+
+        function checkCollision() {
+            const dinoRect = dino.getBoundingClientRect();
+            const obstacleRect = obstacle.getBoundingClientRect();
+
+            if (
+                dinoRect.left < obstacleRect.right &&
+                dinoRect.right > obstacleRect.left &&
+                dinoRect.top < obstacleRect.bottom &&
+                dinoRect.bottom > obstacleRect.top
+            ) {
+                alert('Game Over');
+                document.location.reload();
+            }
+        }
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === ' ') {
+                jump();
+            }
+        });
+
+        setInterval(checkCollision, 10);
+    </script>
+</body>
+</html>
